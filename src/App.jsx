@@ -137,7 +137,7 @@ const App = () => {
                <div className="relative">
                   <div className="aspect-[3/4] rounded-2xl overflow-hidden bg-slate-800 relative z-10 border-2 border-slate-700">
                      {/* Placeholder for Ashley's Image - Using a generic strong female fighter image for now */}
-                     <img src="https://images.unsplash.com/photo-1544216717-3bbf52512659?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Ashley Hancock" className="w-full h-full object-cover opacity-80 hover:opacity-100 transition duration-500 grayscale hover:grayscale-0" />
+                     <img src="/meet-a.png" alt="Ashley Hancock" className="w-full h-full object-cover opacity-80 hover:opacity-100 transition duration-500 grayscale hover:grayscale-0" />
                      <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-slate-900 to-transparent p-8">
                         <p className="text-lime-400 font-bold tracking-widest uppercase text-sm mb-1">Head Coach & Founder</p>
                         <h3 className="text-3xl font-black text-white">ASHLEY HANCOCK</h3>
