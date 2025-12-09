@@ -1,21 +1,942 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>Hancock Fit - Jefferson, GA</title>
-  </head>
-  <body>
-    <div id="root"></div>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alpha & Omega | El Futuro de TI</title>
+    <meta name="description" content="Pioneros en el Futuro de la Consultoría. Revolucionamos los servicios de TI con agentes de IA y estrategias de vanguardia.">
+    <meta name="theme-color" content="#050507">
     
-    <!-- A hidden form for Netlify form detection -->
-    <form name="founder-list" netlify netlify-honeypot="bot-field" hidden>
-      <input type="text" name="name" />
-      <input type="email" name="email" />
-      <select name="interest"></select>
-    </form>
+    <!-- Favicon -->
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <script defer src="https://unpkg.com/lucide@latest"></script>
 
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+    <!-- Anime.js -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    
+    <!-- TSParticles -->
+    <script defer src="https://cdn.jsdelivr.net/npm/tsparticles@2.11.1/tsparticles.bundle.min.js"></script>
+
+    <style>
+        :root {
+            --bg-dark: #030305;
+            --bg-card: rgba(255, 255, 255, 0.02);
+            --bg-card-hover: rgba(255, 255, 255, 0.04);
+            --glass-border: rgba(255, 255, 255, 0.06);
+            --glass-border-hover: rgba(255, 255, 255, 0.12);
+            --accent: #00e5cc;
+            --accent-dim: rgba(0, 229, 204, 0.1);
+            --accent-glow: rgba(0, 229, 204, 0.4);
+            --text-main: #ffffff;
+            --text-secondary: #e0e0e0;
+            --text-muted: #8a8a8a;
+            --font-display: 'Outfit', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --nav-height: 72px;
+            --section-gap: 8rem;
+            --container-max: 1200px;
+            --radius-sm: 0.5rem;
+            --radius-md: 1rem;
+            --radius-lg: 1.5rem;
+            --radius-xl: 2rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-display);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            line-height: 1.7;
+        }
+
+        /* --- Typography --- */
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+        }
+
+        h1 {
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 800;
+        }
+
+        h2 {
+            font-size: clamp(2rem, 4vw, 3.25rem);
+        }
+
+        h3 {
+            font-size: 1.35rem;
+            font-weight: 600;
+        }
+
+        p {
+            color: var(--text-muted);
+            font-size: 1.125rem;
+            font-weight: 400;
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, var(--accent) 0%, #00ffaa 50%, var(--accent) 100%);
+            background-size: 200% auto;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 3s linear infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+
+        .text-accent {
+            color: var(--accent);
+        }
+
+        .mono {
+            font-family: var(--font-mono);
+            font-size: 0.85em;
+            letter-spacing: 0.02em;
+        }
+
+        /* --- Layout --- */
+        .container {
+            max-width: var(--container-max);
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        section {
+            padding: var(--section-gap) 0;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 680px;
+            margin: 0 auto 4rem;
+        }
+
+        .section-header p {
+            margin-top: 1rem;
+        }
+
+        .section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+            padding: 0.5rem 1rem;
+            background: var(--accent-dim);
+            border-radius: 100px;
+            border: 1px solid rgba(0, 229, 204, 0.2);
+        }
+
+        /* --- Buttons --- */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            padding: 1rem 2rem;
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            border-radius: 100px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #000;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: #00ffdd;
+            box-shadow: 0 0 40px var(--accent-glow), 0 8px 32px rgba(0, 229, 204, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text-main);
+            border: 1px solid var(--glass-border-hover);
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* --- Navigation --- */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: var(--nav-height);
+            display: flex;
+            align-items: center;
+            z-index: 100;
+            background: rgba(3, 3, 5, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--text-main);
+        }
+
+        .logo img {
+            height: 36px;
+            width: auto;
+        }
+
+        .logo-text {
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            list-style: none;
+        }
+
+        .nav-links li a {
+            display: block;
+            padding: 0.6rem 1.25rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            border-radius: 100px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-links li a:hover {
+            color: var(--text-main);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-links .btn {
+            padding: 0.6rem 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            color: white;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        /* --- Hero --- */
+        #hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: var(--nav-height);
+        }
+
+        #tsparticles {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            opacity: 0.5;
+        }
+
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 900px;
+            padding: 4rem 2rem;
+        }
+
+        .hero-logo {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 2.5rem;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .hero-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 0 40px var(--accent-glow));
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .hero-title {
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.125rem, 2vw, 1.35rem);
+            color: var(--text-secondary);
+            max-width: 640px;
+            margin: 0 auto 2.5rem;
+            line-height: 1.7;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            margin-top: 5rem;
+            padding-top: 3rem;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .hero-stat {
+            text-align: center;
+        }
+
+        .hero-stat-value {
+            font-family: var(--font-mono);
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent);
+            display: block;
+        }
+
+        .hero-stat-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+
+        /* --- About Section --- */
+        #about {
+            background: linear-gradient(180deg, transparent 0%, rgba(0, 229, 204, 0.02) 50%, transparent 100%);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        .about-content h2 {
+            margin-bottom: 1.5rem;
+        }
+
+        .about-content p {
+            margin-bottom: 1.25rem;
+        }
+
+        .about-features {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .feature-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.25rem;
+            padding: 1.75rem;
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--glass-border-hover);
+            transform: translateX(8px);
+        }
+
+        .feature-icon {
+            flex-shrink: 0;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--accent-dim);
+            border-radius: var(--radius-md);
+            color: var(--accent);
+        }
+
+        .feature-content h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.35rem;
+        }
+
+        .feature-content p {
+            font-size: 0.95rem;
+            margin: 0;
+        }
+
+        /* --- Services Section --- */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .service-card {
+            position: relative;
+            padding: 2.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-xl);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .service-card:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--glass-border-hover);
+            transform: translateY(-4px);
+        }
+
+        .service-card:hover::before {
+            opacity: 1;
+        }
+
+        .service-number {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--accent);
+            opacity: 0.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-card h3 {
+            margin-bottom: 0.75rem;
+        }
+
+        .service-card p {
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        /* --- Why Us Section --- */
+        #why-us {
+            background: linear-gradient(180deg, transparent 0%, rgba(0, 229, 204, 0.03) 100%);
+        }
+
+        .pillars-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .pillar-card {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-xl);
+            transition: all 0.3s ease;
+        }
+
+        .pillar-card:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--glass-border-hover);
+        }
+
+        .pillar-icon {
+            width: 72px;
+            height: 72px;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--accent-dim);
+            border-radius: 50%;
+            color: var(--accent);
+        }
+
+        .pillar-card h4 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .pillar-card p {
+            font-size: 0.95rem;
+        }
+
+        /* --- Footer --- */
+        footer {
+            border-top: 1px solid var(--glass-border);
+            padding: 2rem 0;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-content p {
+            font-size: 0.9rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        /* --- Utilities --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        /* --- Mobile --- */
+        @media (max-width: 1024px) {
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            :root {
+                --section-gap: 5rem;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: var(--nav-height);
+                left: 0;
+                width: 100%;
+                background: var(--bg-dark);
+                flex-direction: column;
+                padding: 1.5rem;
+                gap: 0.5rem;
+                border-bottom: 1px solid var(--glass-border);
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links li a {
+                width: 100%;
+                text-align: center;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero-stats {
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            .pillars-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .contact-wrapper {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Particles Background -->
+    <div id="tsparticles"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <a href="#" class="logo">
+                <img src="ao_logo.png" alt="Alpha & Omega">
+                <span class="logo-text">Alpha & Omega</span>
+            </a>
+            <div class="mobile-menu-btn" onclick="toggleMenu()">
+                <i data-lucide="menu" size="24"></i>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#hero">Inicio</a></li>
+                <li><a href="#about">Nosotros</a></li>
+                <li><a href="#services">Servicios</a></li>
+                <li><a href="#why-us">Por Qué Nosotros</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header id="hero">
+        <div class="hero-content">
+            <h1 class="hero-title reveal">
+                Pioneros en el<br><span class="text-gradient">Futuro de la Consultoría</span>
+            </h1>
+
+            <p class="hero-subtitle reveal">
+                Revolucionamos el panorama tecnológico aprovechando el poder de los agentes de IA. Soluciones inteligentes que transforman la manera en que las organizaciones utilizan la tecnología.
+            </p>
+
+            <div class="hero-cta reveal">
+                <a href="#services" class="btn btn-primary">
+                    Nuestros Servicios <i data-lucide="arrow-right" size="18"></i>
+                </a>
+            </div>
+
+            <div class="hero-stats reveal">
+                <div class="hero-stat">
+                    <span class="hero-stat-value">F100</span>
+                    <span class="hero-stat-label">Historial de Exits</span>
+                </div>
+                <div class="hero-stat">
+                    <span class="hero-stat-value">IA-1ro</span>
+                    <span class="hero-stat-label">Implementación Nativa</span>
+                </div>
+                <div class="hero-stat">
+                    <span class="hero-stat-value">PyME</span>
+                    <span class="hero-stat-label">Soluciones Enfocadas</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-content reveal">
+                    <span class="section-label">
+                        <i data-lucide="sparkles" size="14"></i>
+                        Quiénes Somos
+                    </span>
+                    <h2>Experiencia empresarial,<br><span class="text-accent">accesible para todos</span></h2>
+                    <p>
+                        Somos un equipo dedicado de profesionales experimentados de diversos sectores tecnológicos con múltiples exits exitosos a empresas Fortune 100.
+                    </p>
+                    <p>
+                        Nuestra misión es democratizar soluciones tecnológicas complejas para pequeñas y medianas empresas, ayudándolas a escalar, crecer y lograr exits exitosos con estrategias accesibles y de alto impacto impulsadas por IA.
+                    </p>
+                </div>
+                
+                <div class="about-features reveal">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i data-lucide="trophy" size="24"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h4>Exits Fortune 100</h4>
+                            <p>Historial comprobado con adquisiciones por líderes de la industria.</p>
+                        </div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i data-lucide="cpu" size="24"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h4>Enfoque IA-Primero</h4>
+                            <p>Implementación nativa de IA, no solo un servicio adicional.</p>
+                        </div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i data-lucide="rocket" size="24"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h4>Enfocados en el Crecimiento</h4>
+                            <p>Estrategias diseñadas para escalar y lograr resultados exitosos.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">
+                    <i data-lucide="layers" size="14"></i>
+                    Servicios
+                </span>
+                <h2>Soluciones de vanguardia para el<br>panorama digital moderno</h2>
+                <p>Desde agentes de IA hasta infraestructura lista para exits, entregamos tecnología que genera resultados.</p>
+            </div>
+
+            <div class="services-grid">
+                <div class="service-card reveal">
+                    <span class="service-number mono">01</span>
+                    <h3>Desarrollo de Agentes de IA</h3>
+                    <p>Agentes autónomos personalizados que manejan flujos de trabajo complejos, interacciones con clientes y análisis de datos las 24 horas.</p>
+                </div>
+
+                <div class="service-card reveal">
+                    <span class="service-number mono">02</span>
+                    <h3>Estrategia y Hoja de Ruta de TI</h3>
+                    <p>Planificación arquitectónica a prueba de futuro para alinear tu stack tecnológico con los objetivos comerciales a largo plazo.</p>
+                </div>
+
+                <div class="service-card reveal">
+                    <span class="service-number mono">03</span>
+                    <h3>Nube y Automatización</h3>
+                    <p>Migración a la nube sin fricciones y estrategias de hiperautomatización para reducir costos y aumentar la velocidad.</p>
+                </div>
+
+                <div class="service-card reveal">
+                    <span class="service-number mono">04</span>
+                    <h3>Crecimiento Listo para Exit</h3>
+                    <p>Consultoría enfocada en preparar PyMEs para adquisición a través de infraestructura tecnológica escalable.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Us Section -->
+    <section id="why-us">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">
+                    <i data-lucide="star" size="14"></i>
+                    Por Qué Elegirnos
+                </span>
+                <h2>Construidos diferente, entregando mejor</h2>
+                <p>Lo que distingue a Alpha & Omega de la consultoría tradicional.</p>
+            </div>
+
+            <div class="pillars-grid">
+                <div class="pillar-card reveal">
+                    <div class="pillar-icon">
+                        <i data-lucide="award" size="32"></i>
+                    </div>
+                    <h4>Liderazgo Comprobado</h4>
+                    <p>Liderazgo probado en los entornos de mayor exigencia con exits Fortune 100.</p>
+                </div>
+
+                <div class="pillar-card reveal">
+                    <div class="pillar-icon">
+                        <i data-lucide="users" size="32"></i>
+                    </div>
+                    <h4>Especialistas en PyMEs</h4>
+                    <p>Tecnología de nivel empresarial democratizada para negocios en crecimiento.</p>
+                </div>
+
+                <div class="pillar-card reveal">
+                    <div class="pillar-icon">
+                        <i data-lucide="zap" size="32"></i>
+                    </div>
+                    <h4>Resultados Medibles</h4>
+                    <p>Estrategias que impactan directamente tu rentabilidad y eficiencia operativa.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2025 Alpha & Omega. Todos los derechos reservados.</p>
+                <div class="footer-links">
+                    <a href="#about">Nosotros</a>
+                    <a href="#services">Servicios</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        function toggleMenu() {
+            const nav = document.querySelector('.nav-links');
+            if (nav) nav.classList.toggle('active');
+        }
+
+        function initIcons() {
+            if (window.lucide) lucide.createIcons();
+        }
+
+        function initParticles() {
+            if (!window.tsParticles) return;
+
+            tsParticles.load("tsparticles", {
+                fpsLimit: 60,
+                background: { color: "transparent" },
+                interactivity: {
+                    events: {
+                        onHover: { enable: true, mode: "grab" },
+                        resize: true
+                    },
+                    modes: {
+                        grab: {
+                            distance: 180,
+                            line_linked: { opacity: 0.6 }
+                        }
+                    }
+                },
+                particles: {
+                    color: { value: "#ffffff" },
+                    links: {
+                        color: "#00e5cc",
+                        distance: 150,
+                        enable: true,
+                        opacity: 0.25,
+                        width: 1
+                    },
+                    move: {
+                        direction: "none",
+                        enable: true,
+                        outModes: "bounce",
+                        random: false,
+                        speed: 0.8,
+                        straight: false
+                    },
+                    number: {
+                        density: { enable: true, area: 900 },
+                        value: 50
+                    },
+                    opacity: { value: 0.4 },
+                    shape: { type: "circle" },
+                    size: { value: { min: 1, max: 2.5 } }
+                },
+                detectRetina: true
+            });
+        }
+
+        function initRevealAnimations() {
+            const elements = document.querySelectorAll('.reveal');
+            if (!elements.length) return;
+
+            const animator = window.anime;
+            if (!window.IntersectionObserver || !animator) {
+                elements.forEach(el => {
+                    el.style.opacity = 1;
+                    el.style.transform = 'none';
+                });
+                return;
+            }
+
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animator({
+                            targets: entry.target,
+                            opacity: [0, 1],
+                            translateY: [40, 0],
+                            duration: 800,
+                            easing: 'easeOutCubic'
+                        });
+                        obs.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            elements.forEach(el => observer.observe(el));
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initIcons();
+            initParticles();
+            initRevealAnimations();
+        });
+    </script>
+</body>
 </html>
